@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}渗透测试-武器库{% endblock %}
+{% block page_content %}
+<div class="page-header">
+<body data-spy="scroll" data-target="#myScrollspy">
+<div class="container">
+    <div class="row">
+        <div class="col-xs-3" id="myScrollspy">
+            <ul class="nav nav-tabs nav-stacked" id="myNav">
+                <li class="active"><a href="#section-1">信息收集</a></li>
+                <li><a href="#section-2">爆破工具</a></li>
+                <li><a href="#section-3">WEB安全工具</a></li>
+                <li><a href="#section-4">漏洞利用</a></li>
+                <li><a href="#section-5">内网渗透</a></li>
+                <!--<li><a href="#section-6">逆向工具</a></li>-->
+            </ul>
+        </div>
+        <div class="col-xs-9">
+            <h2 id="section-1">信息收集</h2>
+            <p>指纹信息<li><a href="http://www.yunsee.cn/">云悉</a></li></p>
+            <p>资产信息
+            <li><a href="https://www.zoomeye.org/">钟馗之眼</a></li>
+            <li><a href="https://fofa.so/">FOFA</a></li>
+            <li><a href="http://www.webscan.cc/">WEBSCAN</a></li>
+            </p>
+            <h2 id="section-2">爆破工具</h2>
+            <p>弱口令爆破
+            <li><a href="https://github.com/shack2/SNETCracker">超级弱口令</a></li>
+            <li><a href="https://github.com/se55i0n/DBScanner">DBSCanner</a></li>
+            <li><a href="https://github.com/vanhauser-thc/thc-hydra">hydra</a></li>
+            </p>
+            <hr>
+            <h2 id="section-3">WEB安全工具</h2>
+            <p>扫描工具
+            <li>WVS</li>
+            <li>AppScan</li>
+            <li><a href="https://github.com/ysrc/xunfeng">巡风</a></li>
+            <li><a href="https://github.com/TideSec/WDScanner">WDSCanner</a></li>
+            <li><a href="https://github.com/az0ne/AZScanner">AZSCanner</a></li>
+            <li><a href="https://github.com/knownsec/Pocsuite">Pocsuite</a></li>
+            </p>
+            <p>抓包工具
+            <li>Burpsuite</li>
+            <li>Fiddle</li>
+            </p>
+            <hr>
+            <h2 id="section-4">漏洞利用</h2>
+            <p>漏洞扫描
+            <li>启明天镜</li>
+            <li>Nessus</li>
+            </p>
+            <hr>
+            <h2 id="section-5">内网渗透</h2>
+            <p>Powershell渗透框架
+            <li><a href="https://github.com/samratashok/nishang">nishang</a></li>
+            <li><a href="https://github.com/EmpireProject/Empire">Empire</a></li>
+            <li><a href="https://github.com/PowerShellMafia/PowerSploit">PowerSploit</a></li>
+            </p>
+            <hr>
+            <!--<h2 id="section-6">内网渗透</h2>-->
+            <!--<p>Nam eget purus nec est consectetur vehicula. Nullam ult</p>-->
+        </div>
+    </div>
+</div>
+</body>
+</div>
+{% endblock %}

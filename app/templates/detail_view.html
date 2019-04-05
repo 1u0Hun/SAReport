@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Page Not Found{% endblock %}
+{% block page_content %}
+<div class="page-header">
+    <div class="panel panel-default">
+    <div class="panel-heading">漏洞详情</div>
+    <div class="panel-body">
+        <p> <h3>{{detail.project_name}}{{detail.sys_name}}{{detail.vuln_name}}</h3>
+        </p>
+    </div>
+    <ul class="list-group">
+        <li class="list-group-item">{{detail.detail | safe}}</li>
+        <li class="list-group-item"></li>
+    </ul>
+</div>
+</div>
+{% endblock %}

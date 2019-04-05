@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}跳转界面{% endblock %}
+{% block scripts %}
+{{ super() }}
+<script type="text/javascript">
+window.onload=function(){
+  var myspan=document.getElementById("dao");
+  var timer=3;
+  var flag;
+  function daoji(){
+     timer=timer-1;
+     myspan.innerHTML=timer;
+     if(timer==0){
+       location.href="/vuln/list";
+       clearInterval(flag);
+     }
+  }
+  flag=setInterval(daoji,1000);
+}
+</script>
+{% endblock %}
+{% block page_content %}
+<div class="page-header">
+ {%for message in get_flashed_messages()%}
+        <div class="alert alert-warning">
+            {{message}}
+        </div>
+    {% endfor %}
+    <div class="alert alert-info">
+        页面跳转:<span id="dao">3</span>s
+    </div>
+
+</div>
+{% endblock %}

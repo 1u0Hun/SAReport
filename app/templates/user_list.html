@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}报告列表{% endblock %}
+{% block scripts %}
+{{ super() }}
+
+{% endblock %}
+{% block page_content %}
+<div class="page-header">
+	<form action="/user/search" method="GET" class="navbar-form navbar-left" role="search">
+			<div class="form-group">
+				<input id="search" name="search" type="text" class="form-control" value="">
+			</div>
+			<input type="submit" name="submit" id="submit" class="form-control" value="搜索">
+	</form>
+    <div class="panel panel-default">
+	<table class="table">
+		<th>用户名称</th>
+		<th>联系方式</th>
+		<th>操作</th>
+		{% for u in users%}
+		<tr>
+			<td>{{ u.participant_name }}</td>
+			<td>{{ u.telephone }}</td>
+            <td>
+				<a href="/user/edit/{{ u.participant_id }}">编辑</a>
+				<a  href="{{ url_for('user.delete', participant_id=u.participant_id) }}" onclick="{if(confirm('确定删除?')){this.document.formname.submit();return true;}return false;}"> 删除</a>
+			</td>
+
+		</tr>
+		{% endfor %}
+	</table>
+		{{ pagination.links }}
+	</div>
+</div>
+{% endblock %}

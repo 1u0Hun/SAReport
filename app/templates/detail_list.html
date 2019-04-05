@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}报告列表{% endblock %}
+{% block scripts %}
+{{ super() }}
+
+{% endblock %}
+{% block page_content %}
+<div class="page-header">
+	<form action="/detail/search" method="GET" class="navbar-form navbar-left" role="search">
+			<div class="form-group">
+				<input id="search" name="search" type="text" class="form-control" value="">
+			</div>
+			<input type="submit" name="submit" id="submit" class="form-control" value="搜索">
+	</form>
+    <div class="panel panel-default">
+	<table class="table">
+		<th>项目名称</th>
+		<th>系统名称</th>
+		<th>漏洞名称</th>
+        <th>漏洞链接</th>
+		<th>详情</th>
+		{% for d in details%}
+		<tr>
+			<td>{{ d.project_name }}</td>
+			<td>{{ d.sys_name }}</td>
+			<td>{{ d.vuln_name }}</td>
+            <td>{{ d.sys_url }}</td>
+            <td>
+				<a href="/detail/view/{{d.id}}">查看</a>
+			</td>
+
+		</tr>
+		{% endfor %}
+	</table>
+		{{ pagination.links }}
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Page Not Found{% endblock %}
+{% block page_content %}
+<div class="page-header">
+
+            <textarea id="content" name="content" class="ckeditor"></textarea>
+    <input id="submit1" type="submit" name="submit1" class="btn btn-success form-control-static" onclick=ceshi() value="添加">
+
+    <script type="text/javascript">
+            CKEDITOR.replace( "content", {
+        language: "",
+        height: 0,
+        width: 0,
+        codeSnippet_theme: "monokai_sublime",
+        imageUploadUrl: "/upload",
+        filebrowserUploadUrl: "/upload",
+        filebrowserBrowseUrl: "",
+        extraPlugins: "filebrowser,filebrowser",
+         // CSRF token header for XHR request
+
+    });//参数‘content’是textarea元素的name属性值，而非id属性值
+</script>
+    <script>
+        function ceshi() {
+            var CHtml= CKEDITOR.instances.content.getData();
+            alert(CHtml);
+        }
+
+
+    </script>
+</div>
+<!--<script src="//cdn.ckeditor.com/4.4.6/standard/ckeditor.js"></script>-->
+<script src="http://cdn.ckeditor.com/4.9.2/standard/ckeditor.js"></script>
+<!--<script src="{{ url_for('static', filename='ckeditor/ckeditor.js') }}"></script>-->
+{% endblock %}

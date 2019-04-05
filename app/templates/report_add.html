@@ -1,0 +1,315 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}添加报告{% endblock %}
+{% block scripts%}
+{{ super() }}
+    <script src="//cdn.ckeditor.com/4.9.2/standard/ckeditor.js"></script>
+    <script type="text/javascript">
+        //加载ckeditor
+        CKEDITOR.replace("content", {
+        language: "",
+        height: 0,
+        width: 0,
+        codeSnippet_theme: "monokai_sublime",
+        imageUploadUrl: "/upload",
+        filebrowserUploadUrl: "/upload",
+        filebrowserBrowseUrl: "",
+        extraPlugins: "filebrowser,filebrowser",
+         // CSRF token header for XHR request
+
+    });
+    // function ceshi() {
+    //         var CHtml= CKEDITOR.instances.content.getData();
+    //         alert(CHtml);
+    //     }
+    //下拉框特效
+    $('#production_date,#start_date').datepicker({
+        weekStart: 1,
+        autoclose: true,
+        daysOfWeekHighlighted: "0,6",
+        format: "yyyy/mm/dd",
+        language: "zh-CN"
+    });
+
+    $("#vul_name").change(
+        function () {
+            vul_id = $("#vul_name").val();
+            $.ajax({
+            url:'/vuln/'+vul_id,
+            type:'GET',
+            success:function (data,status) {
+                // alert("数据: " + data['vul_level'] + "\n状态: " + status);
+                $("#vul_level").attr("value",data['vul_level']);
+                $("#vul_description").val(data['vul_description']);
+                $("#vul_suggest").val(data['vul_suggest']);
+                $("#vul_link").attr("value",data['vul_link']);
+            }
+        });
+    });
+
+    $(document).ready(function () {
+        $("#vul").hide();
+        $("#vul_add").click(function () {
+            $("#vul").toggle();
+            showSys1();
+        })
+        }
+    );
+    //展示已添加的漏洞
+    function showVuled() {
+        var project_id = $("#project_id").val()
+        $.ajax({
+            url:'/detailed/'+project_id,
+            type:'GET',
+            success:function (data,status) {
+                // alert("数据: " + data['vuled_name'] + "\n状态: " + status);
+                 $.each(data,function (i, item) {
+                     console.log(item.vuled_level);
+                     $("#total_num").attr("value",item.total_num);
+                     $("#high_num").attr("value",item.high_num);
+                     $("#mid_num").attr("value",item.mid_num);
+                     $("#low_num").attr("value",item.low_num);
+                     // sum(item.vuled_level);
+                     var f = "<li class='btn-lg btn-info ' style='background-color: #fff;color: grey'><label for='vuled_name'>漏洞名称</label>:<span id='vuled_name' name='vuled_name' class='text-left'>"+item.vuled_name+"</span>    "+
+                          "<label for='vuled_level'>漏洞级别</label>:<span id='vuled_level' name='vuled_level' class='text-right'>"+item.vuled_level+"</span>       "
+                         +"<label for='sysed_url'>漏洞URL</label>:<span id='sysed_url' name='systemed_name' class='text-right'>"+item.sysed_url+"</span><span class='btn glyphicon glyphicon-pencil text-right'></span></li>"
+                     $("#vuled").append(f);
+                 })
+            }
+        });
+
+    }
+
+    //展示项目对应的系统
+    function showSys() {
+        $.ajax({
+            url:'/sys/'+$("#project_id").val(),
+            type:'GET',
+            dataType:'json',//希望服务器返回json格式的数据
+            success:function (data,status) {
+                // alert("数据: " + data['vuled_name'] + "\n状态: " + status);
+                 $.each(data,function (i, item) {
+                     var f = "<li class='btn-lg btn-info ' style='background-color: #fff;color: grey'><label for='sysed_name'>系统名称</label>:<span id='sysed_name' name='sysed_name' class='text-left'>"+item.sysed_name+"</span>    "+
+                          "<label for='sysed_url'>系统url</label>:<span id='sysed_url' name='sysed_url' class='text-right'>"+item.sysed_url+"</span>       "
+                         +"<label for='sysed_ip'>系统IP</label>:<span id='sysed_ip' name='sysed_ip' class='text-right'>"+item.sysed_ip+"</span><span class='btn glyphicon glyphicon-pencil text-right'></span></li>"
+                     $("#sysed").append(f);
+                 })
+            }
+        });
+    }
+
+    function showSys1(){
+        $("#systemed_id").empty();
+        $.ajax({
+            url:'/sys/'+$("#project_id").val(),
+            type:'GET',
+            dataType:'json',//希望服务器返回json格式的数据
+            success:function (data,status) {
+                // alert("数据: " + data['vuled_name'] + "\n状态: " + status);
+                 $.each(data,function (i, item) {
+                     var f1 = "<option value='"+item.sysed_id+"'>"+item.sysed_name+"</option>";
+                     // alert(item.sysed_name)
+                     $("#systemed_id").append(f1);
+                 })
+            }
+        });
+
+    }
+
+
+    // 初始化获取已添加的漏洞
+    // $(document).ready(function () {
+    //     showVuled();
+    //     showSys()
+    // });
+
+    $("#submit1").click(function () {
+        $("#vul").toggle();
+        $("#vuled").empty();
+        addVuln();
+        showVuled();
+    });
+
+    $("#sys_add").click(function () {
+        $("#sysed").empty();
+        var project_id = $("#project_id").val()
+        if(!isEmpty(project_id)){
+            addSys();
+        }else {
+            alert('project_id为空')
+        }
+        setTimeout(showSys,"500");
+    })
+
+    //添加系统
+    function addSys() {
+        var data= {
+            'project_id':$("#project_id").val(),
+            'system_name':$("#system_name").val(),
+            'system_url':$("#system_url").val(),
+            'system_ip':$("#system_ip").val(),
+        };
+        $.ajax({
+        type:'POST',
+        url:'/report/add_system',
+        data:JSON.stringify(data),
+        contentType:'application/json; charset=UTF-8',
+        dataType:'json',//希望服务器返回json格式的数据
+        success:function(data,status){
+            if(data['status']=='Error'){
+                alert(data['info'])
+            }else if(data['status']=='OK'){
+                alert(data['info'])
+            }
+        }
+        });
+
+
+    }
+    //添加项目
+    function addProject() {
+        var data = {
+            'project':$('#project').val(),
+            'producer':$('#producer').val(),
+            'production_date':$('#production_date').val(),
+            'reviewer':$('#reviewer').val(),
+            'start_date':$('#start_date').val(),
+            'risk_level':$('#risk_level').val(),
+            'participant':$('#participant').val(),
+            'work_time':$("#work_time").val()
+        };
+        $.ajax({
+        type:'POST',
+        url:'/report/add_project',
+        data:JSON.stringify(data),
+        contentType:'application/json; charset=UTF-8',
+        dataType:'json',//希望服务器返回json格式的数据
+        success:function(data,status){
+            if(data['status']=='Error'){
+                alert(data['info'])
+            }else if(data['status']=='OK'){
+                 $("#project_id").attr("value",data['project_id']);
+                alert($("#project_id").val());
+            }
+        }
+        });
+    }
+
+    //添加项目对应的漏洞
+        function addVuln() {
+        var data= {
+            'project_id':$("#project_id").val(),
+            'vul_name':$("#vul_name").val(),      //此处的vul_name 实际上是vul_id
+            'system_url1':$("#system_url1").val(),
+            'systemed_id':$("#systemed_id").val(),
+            'detail':CKEDITOR.instances.content.getData(),
+        };
+        $.ajax({
+        type:'POST',
+        url:'/report/add_vuln',
+        data:JSON.stringify(data),
+        contentType:'application/json; charset=UTF-8',
+        dataType:'json',//希望服务器返回json格式的数据
+        success:function(data,status){
+            if(data['status']=='Error'){
+                alert(data['info'])
+            }else if(data['status']=='OK'){
+                alert(data['info'])
+            }
+        }
+        });
+
+
+    }
+
+    $("#project_submit").click(
+        function () {
+            // alert($('#participant').val())
+            addProject();
+        }
+    )
+    //判断是否为空
+    function isEmpty(obj){
+    if(typeof obj == "undefined" || obj == null || obj == ""){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+
+
+
+
+    </script>
+{% endblock%}
+
+{% block page_content %}
+<div class="page-header">
+    <form action="/report/add/" method="post">
+        {{form.hidden_tag()}}
+        {%for message in get_flashed_messages()%}
+        <div class="alert alert-success">
+            {{message}}
+        </div>
+        {% endfor %}
+        <h4><b>任务:</b></h4>
+        <div class="form-inline" role="form">
+        {{form.project_id()}}
+        {{form.project.label}}:{{form.project()}}
+        {{form.producer.label}}:{{form.producer()}}
+        {{form.production_date.label}}:{{form.production_date()}}
+        {{form.reviewer.label}}:{{form.reviewer()}}
+        </div>
+        <br>
+        <div class="form-inline" role="form">
+        {{form.start_date.label}}:{{form.start_date()}}
+        {{form.work_time.label}}:{{form.work_time()}}
+        {{form.risk_level.label}}:{{form.risk_level()}}
+        {{form.participant.label}}:{{form.participant()}}
+        <span class="btn-info form-control" id="project_submit">保存项目</span>
+        </div>
+        <h4><b> 漏洞数量(可自动化填写):</b></h4>
+        <div class="form-inline" role="form">
+        {{form.total_num.label}}:{{form.total_num()}}
+        {{form.high_num.label}}:{{form.high_num()}}
+        {{form.mid_num.label}}:{{form.mid_num()}}
+        {{form.low_num.label}}:{{form.low_num()}}
+        </div>
+        <h4><b>系统详情:</b></h4>
+        <div class="form form-inline" role="form" id="sysed">
+        </div>
+        <!--<p class="btn-success text-center font glyphicon-plus " id="sys_add"> 添加系统</p>-->
+        <div class="form-inline" role="form" id="system">
+            {{form.system_name.label}}:{{form.system_name()}}
+            {{form.system_url.label}}:{{form.system_url()}}
+            {{form.system_ip.label}}:{{form.system_ip()}}
+            <p class="btn btn-info form-control" id="sys_add">添加系统</p>
+        </div>
+        <h4><b>漏洞详情</b></h4>
+        <div class="form form-inline" role="form" id="vuled">
+        </div>
+        <p class="btn btn-success form-control font glyphicon-plus" id="vul_add"> 添加漏洞</p>
+        <div class="form-group" id="vul"><br>
+        <div class="form-inline" role="table">
+            {{form.vul_name.label}}:{{form.vul_name()}}
+            {{form.vul_level.label}}:{{form.vul_level()}}
+            {{form.systemed_id.label}}:{{form.systemed_id()}}
+            {{form.system_url1.label}}:{{form.system_url1()}}
+        </div>
+        <div class="form-horizontal" role="table">
+            {{form.vul_description.label}}:{{form.vul_description()}}
+            {{form.content.label}}:{{form.content()}}
+            {{form.vul_suggest.label}}:{{form.vul_suggest()}}
+            {{form.vul_link.label}}:{{form.vul_link()}}
+            <br>
+            <input id="submit1" name="submit1" class="btn btn-success form-control-static"  value="添加">
+        </div>
+        </div>
+
+    {{form.submit()}}
+    </form>
+</div>
+<!--{{ckeditor.load()}}{{ckeditor.config(name='detail')}}-->
+{% endblock %}
+

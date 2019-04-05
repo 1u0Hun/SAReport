@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}渗透测试-知识库{% endblock %}
+{% block page_content %}
+<div class="page-header">
+<body data-spy="scroll" data-target="#myScrollspy">
+<div class="container">
+    <div class="row">
+        <div class="col-xs-3" id="myScrollspy">
+            <ul class="nav nav-tabs nav-stacked" id="myNav">
+                <li class="active"><a href="#section-1">信息泄露</a></li>
+                <li><a href="#section-2">身份认证</a></li>
+                <li><a href="#section-3">常见漏洞</a></li>
+                <li><a href="#section-4">中间件漏洞</a></li>
+                <li><a href="#section-5">第三方CMS漏洞</a></li>
+                <!--<li><a href="#section-6">逆向工具</a></li>-->
+            </ul>
+        </div>
+        <div class="col-xs-9">
+            <h2 id="section-1">信息泄露</h2>
+            <p><li>Git、SVN、备份、压缩等文件泄露<a>敏感信息泄露</a></li></p>
+            <h2 id="section-2">身份认证</h2>
+            <p><li><a>用户注册模块</a></li>
+            <li><a>用户登录模块</a></li>
+            <li><a>用户忘记密码模块</a></li>
+            </p>
+            <hr>
+            <h2 id="section-3">常见漏洞</h2>
+            <p>
+            <li><a>SQL注入</a></li>
+            <li><a>XSS</a></li>
+            <li><a>CSRF</a></li>
+            <li><a>SSRF</a></li>
+            <li><a>XXE</a></li>
+            <li><a>Xpath</a></li>
+            <li><a>命令执行</a></li>
+            <li><a>文件下载漏洞</a></li>
+            <li><a>文件包含漏洞</a></li>
+            <li><a>文件上传漏洞</a></li>
+            </p>
+            <hr>
+            <h2 id="section-4">中间件漏洞</h2>
+            <p>
+            <li><a>IIS漏洞</a></li>
+            <li><a>Apache漏洞</a></li>
+            <li><a>Nignx漏洞</a></li>
+            <li><a>Tomcat漏洞</a></li>
+            <li><a>Struts漏洞</a></li>
+            <li><a>Redis+postgresql漏洞</a></li>
+            <li><a>Weblogic+Jboss漏洞</a></li>
+            <li><a>ThinkPHP漏洞</a></li>
+            </p>
+            <hr>
+            <h2 id="section-5">第三方CMS漏洞</h2>
+            <p>Nam eget purus nec est consectetur vehicula. Nullam ult</p>
+            <hr>
+            <!--<h2 id="section-6">内网渗透</h2>-->
+            <!--<p>Nam eget purus nec est consectetur vehicula. Nullam ult</p>-->
+        </div>
+    </div>
+</div>
+</body>
+</div>
+{% endblock %}

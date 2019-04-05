@@ -1,0 +1,75 @@
+{% extends "bootstrap/base.html" %}
+
+<meta charset="utf-8">
+{%  block scripts %}
+    {{ super() }}
+    <script src="https://cdn.bootcss.com/echarts/4.2.0-rc.2/echarts.js"></script>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/i18n/defaults-*.min.js"></script>
+    <script src="../static/js/index.js"></script>
+    <script src="http://cdn.ckeditor.com/4.9.2/standard/ckeditor.js"></script>
+{% endblock %}
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet" type="text/css" href="../static/css/index.css">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}" type="image/x-icon">
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}" type="image/x-icon">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker.standalone.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
+
+{% endblock %}
+{% block title %}Sangfor Security Tools{% endblock %}
+{% block navbar %}
+<div class="navbar navbar-inverse" role="navigation">
+ <div class="container">
+ <div class="navbar-header">
+ <button type="button" class="navbar-toggle"
+ data-toggle="collapse" data-target=".navbar-collapse">
+ <span class="sr-only">Toggle navigation</span>
+ <span class="icon-bar"></span>
+ <span class="icon-bar"></span>
+ <span class="icon-bar"></span>
+ </button>
+ <a class="navbar-brand" href="/"><img src="{{ url_for('static', filename='img/favicon.ico') }}" alt="深信服渗透测试报告系统"></a>
+ </div>
+ <div class="navbar-collapse collapse">
+ <ul class="nav navbar-nav">
+     <li><a>深信服渗透测试系统</a></li>
+     <li><a href="/report/add">添加报告</a></li>
+     <li><a href="/report/list">报告列表</a></li>
+     <li><a href="#"  class="dropdown-toggle" data-toggle="dropdown">漏洞管理<b class="caret"></b></a>
+         <ul class="dropdown-menu">
+             <li><a href="/vuln/list">漏洞列表</a></li>
+             <li><a href="/vuln/add">漏洞添加</a></li>
+
+         </ul>
+     </li>
+     <li>
+         <a href="#" class="dropdown-toggle" data-toggle="dropdown">用户管理<b class="caret"></b></a>
+         <ul class="dropdown-menu">
+             <li><a href="/user/list">用户列表</a></li>
+             <li><a href="/user/add">用户添加</a></li>
+         </ul>
+     </li>
+     <li><a href="/detail/list">漏洞库</a></li>
+     <li><a href="/tool">武器库</a></li>
+     <li><a href="/know">知识库</a></li>
+     <!--<li><a href="/About">About Us</a></li>-->
+ </ul>
+ </div>
+ </div>
+</div>
+{% endblock %}
+{% block content %}
+<div class="container">
+ {% block page_content %}{% endblock %}
+</div>
+<footer class="footer  container-fluid foot-wrap" style="background: #313131; padding-top: 10px; margin-top: 15px;">
+        <p align="center" style="margin-top: 20px;color:#ffffff;">
+            Copyright &copy;2019 Hakuna&鲜灼
+        </p>
+    </footer>
+{% endblock %}

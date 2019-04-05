@@ -1,0 +1,12 @@
+flask
+flask_bootstrap
+flask_wtf
+flask_sqlalchemy
+flask_login
+flask_ckeditor
+docxtpl
+pymysql
+matplotlib
+Pillow
+docx
+flask_paginate

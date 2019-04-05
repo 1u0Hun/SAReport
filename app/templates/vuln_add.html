@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}添加漏洞{% endblock %}
+{% block page_content %}
+<div class="page-header">
+ {%for message in get_flashed_messages()%}
+        <div class="alert alert-warning">
+            {{message}}
+        </div>
+ {% endfor %}
+ {{wtf.quick_form(form)}}
+</div>
+{% endblock %}

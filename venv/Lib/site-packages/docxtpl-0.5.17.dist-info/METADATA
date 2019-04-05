@@ -1,0 +1,191 @@
+Metadata-Version: 2.0
+Name: docxtpl
+Version: 0.5.17
+Summary: Python docx template engine
+Home-page: https://github.com/elapouya/python-docx-template
+Author: Eric Lapouyade
+Author-email: elapouya@gmail.com
+License: LGPL 2.1
+Keywords: jinja2
+Platform: UNKNOWN
+Classifier: Intended Audience :: Developers
+Classifier: Development Status :: 4 - Beta
+Classifier: Programming Language :: Python :: 2
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.4
+Requires-Dist: six
+Requires-Dist: python-docx (<=0.8.7)
+Requires-Dist: jinja2
+Requires-Dist: lxml
+Provides-Extra: docs
+Requires-Dist: Sphinx; extra == 'docs'
+Requires-Dist: sphinxcontrib-napoleon; extra == 'docs'
+
+====================
+python-docx-template
+====================
+
+Use a docx as a jinja2 template
+
+Introduction
+------------
+
+This package uses 2 major packages :
+
+- python-docx for reading, writing and creating sub documents
+- jinja2 for managing tags inserted into the template docx
+
+python-docx-template has been created because python-docx is powerful for creating documents but not for modifying them.
+
+The idea is to begin to create an example of the document you want to generate with microsoft word, it can be as complex as you want :
+pictures, index tables, footer, header, variables, anything you can do with word.
+Then, as you are still editing the document with microsoft word, you insert jinja2-like tags directly in the document.
+You save the document as a .docx file (xml format) : it will be your .docx template file.
+
+Now you can use python-docx-template to generate as many word documents you want from this .docx template and context variables you will associate.
+
+Share
+-----
+
+If you like this project, please rate and share it here : http://rate.re/github/elapouya/python-docx-template
+
+Documentation
+-------------
+
+Please, `read the doc <http://docxtpl.readthedocs.org>`_
+
+
+News
+====
+0.5.17 (2019-01-20)
+-------------------
+- Delegated autoescaping to Jinja2 Environment (#175)
+
+0.5.16 (2019-01-11)
+-------------------
+- Force to use python-docx 0.8.7 (#170)
+- Add getting undeclared variables in the template (#171)
+
+0.5.15 (2019-01-02)
+-------------------
+- Added `PAGE_BREAK` feature (#168)
+
+0.5.14 (2018-12-23)
+-------------------
+- Fixed issue #159: autoescaped values for both str and unicode.
+
+0.5.12 (2018-12-18)
+-------------------
+- Fix tables with gridSpan that have less cells after the tc forloop (#164)
+
+0.5.11 (2018-11-21)
+-------------------
+- Smart double quotes in jinja tags are now converted into simple double quotes
+
+0.5.10 (2018-11-20)
+-------------------
+- Smart quotes in jinja tags are now converted into simple quotes
+- Add custom jinja filter example in tests/
+- Reformat the code to be a little more PEP8 compliant
+
+0.5.9 (2018-11-18)
+------------------
+- Add {% hm %} tag for table columns horizontal merging (Thanks to nickgashkov)
+- Split tests/tests_files dir into templates and output dirs
+
+0.5.8 (2018-11-08)
+------------------
+- autoescape support for python 2.7
+- fix issue #154
+
+0.5.7 (2018-11-07)
+------------------
+- Render can now autoescape context dict
+
+0.5.6 (2018-10-18)
+------------------
+- Fix invalid xml parse because using {% vm %}
+
+0.5.5 (2018-10-05)
+------------------
+- Cast to string non-string value given to RichText or Listing objects
+- Import html.escape instead of cgi.escape (deprecated)
+
+0.5.4 (2018-09-19)
+------------------
+- Declare package as python2 and python3 compatible for wheel distrib
+
+0.5.3 (2018-09-19)
+------------------
+- Add sub/superscript in RichText
+
+0.5.2 (2018-09-13)
+------------------
+- Fix table vertical merge
+
+0.5.0 (2018-08-03)
+------------------
+- An hyperlink can now be used in RichText
+
+0.4.13 (2018-06-21)
+-------------------
+- Subdocument can now be based on an existing docx
+- Add font option in RichText
+- Better tabs and spaces management for MS Word 2016
+- Wheel distribution
+- Manage autoscaping on InlineImage, Richtext and Subdoc
+- Purge MANIFEST.in file
+- Accept variables starting with 'r' in {{}} when no space after {{
+- Remove debug traces
+- Add {% vm %} to merge cell vertically within a loop (Thanks to Arthaslixin)
+- use six.iteritems() instead of iteritems for python 3 compatibility
+- Fixed Bug #95 on replace_pic() method
+- Add replace_pic() method to replace pictures from its filename (Thanks to Riccardo Gusmeroli)
+- Improve image attachment for InlineImage ojects
+- Add replace_media() method (useful for header/footer images)
+- Add replace_embedded() method (useful for embedding docx)
+
+0.3.9 (2017-06-27)
+------------------
+- Fix exception in fix_table()
+- Fix bug when using more than one {{r }} or {%r %} in the same run
+- Fix git tag v0.3.6 was in fact for 0.3.5 package version
+  so create a tag 0.3.7 for 0.3.7 package version
+- Better head/footer jinja2 handling (Thanks to hugokernel)
+- Fix bug where one is using '%' (modulo operator) inside a tag
+- Add Listing class to manage \n and \a (new paragraph) and escape text AND keep current styling
+- Add {%tc } tags for dynamic table columns (Thanks to majkls23)
+- Remove version limitation over sphinx package in setup.py
+- Add PNG & JPEG in tests/test_files/
+- You can now add images directly without using subdoc, it is much more faster.
+
+0.2.5 (2017-01-14)
+------------------
+- Add dynamic colspan tag for tables
+- Fix /n in RichText class
+- Add Python 3 support for footer and header
+- Fix bug when using utf-8 chracters inside footer or header in .docx template
+  It now detects header/footer encoding automatically
+- Fix bug where using subdocs is corrupting header and footer in generated docx
+  Thanks to Denny Weinberg for his help.
+- Add Header and Footer support (Thanks to Denny Weinberg)
+
+0.1.11 (2016-03-1)
+------------------
+- '>' and '<' can now be used inside jinja tags
+- render() accepts optionnal jinja_env argument :
+  useful to set custom filters and other things
+- better subdoc management : accept tables
+- better xml code cleaning around Jinja2 tags
+- python 3 support
+- remove debug code
+- add lxml dependency
+- fix template filter with quote
+- add RichText support
+- add subdoc support
+- add some exemples in tests/
+- First running version
+
+
+

@@ -1,0 +1,24 @@
+#circle{
+width: 200px;
+height: 200px;
+background-color: #eeeeee;
+color: black;
+text-align: center;
+border-radius: 100px;
+/*-webkit-border-radius: 10px;*/
+/*-moz-border-radius: 100px;*/
+border:3px red solid;
+}
+
+#red{
+    color: red;
+}
+
+#hide{
+    display: none;
+}
+
+
+.font{
+    font-size: 18px;
+}
